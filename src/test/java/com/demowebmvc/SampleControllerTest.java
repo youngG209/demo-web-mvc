@@ -54,4 +54,66 @@ public class SampleControllerTest {
                 ;
     }
 
+//    1. GET /events
+    @Test
+    public void getEventsTest() throws Exception {
+        mockMvc.perform(get("/events"))
+                .andExpect(status().isOk());
+    }
+
+//    2. GET /events/1,
+//      GET /events/2,
+//      GET /events/3
+    @Test
+    public void getEventsWithIdTest() throws Exception {
+        mockMvc.perform(get("/events/1"))
+                .andExpect(status().isOk());
+        mockMvc.perform(get("/events/2"))
+                .andExpect(status().isOk());
+        mockMvc.perform(get("/events/3"))
+                .andExpect(status().isOk());
+    }
+
+//    3. POST /events CONTENT-TYPE: application/json ACCEPT: application/json
+    @Test
+    public void postEventsTest() throws Exception {
+        mockMvc.perform(post("/events")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        )
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+//    4. DELETE /events/1,
+//      DELETE /events/2,
+//      DELETE /events/3
+    @Test
+    public void deleteEventsTest() throws Exception {
+        mockMvc.perform(delete("/events/1"))
+                .andExpect(status().isOk());
+        mockMvc.perform(delete("/events/2"))
+                .andExpect(status().isOk());
+        mockMvc.perform(delete("/events/3"))
+                .andExpect(status().isOk());
+    }
+
+//    5. PUT /events/1 CONTENT-TYPE: application/json ACCEPT: application/json,
+//      PUT /events/2 CONTENT-TYPE: application/json ACCEPT: application/json
+    @Test
+    public void putEventsTest() throws Exception {
+        mockMvc.perform(put("/events/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        )
+                .andDo(print())
+                .andExpect(status().isOk());
+        mockMvc.perform(put("/events/2")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        )
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
 }

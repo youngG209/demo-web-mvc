@@ -3,9 +3,7 @@ package com.demowebmvc;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class SampleController {
@@ -51,5 +49,41 @@ public class SampleController {
     @ResponseBody
     public String bye() {
         return "bye";
+    }
+
+    @GetMapping("/events")
+    @ResponseBody
+    public String events() {
+        return "events";
+    }
+
+    @GetMapping("/events/{id}")
+    @ResponseBody
+    public String getIdEvents(@PathVariable("id") int id) {
+        return "events";
+    }
+
+    @PostMapping(value = "/events",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @ResponseBody
+    public String postEvents() {
+        return "events";
+    }
+
+    @DeleteMapping(value = "/events/{id}")
+    @ResponseBody
+    public String deleteEvents(@PathVariable("id") int id) {
+        return "events";
+    }
+
+    @PutMapping(value = "/events/{id}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @ResponseBody
+    public String putEvents(@PathVariable("id") int id) {
+        return "events";
     }
 }
