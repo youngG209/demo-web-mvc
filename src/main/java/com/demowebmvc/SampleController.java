@@ -1,5 +1,6 @@
 package com.demowebmvc;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,5 +21,27 @@ public class SampleController {
     @ResponseBody
     public String hello() {
         return "hello";
+    }
+
+//    특정한 헤더가 있는 요청을 처리하고 싶은 경우
+//      - @RequestMapping( headers = “key”)
+//    특정한 헤더가 없는 요청을 처리하고 싶은 경우
+//      - @RequestMapping( headers = “ ! key”)
+//    특정한 헤더 키/값이 있는 요청을 처리하고 싶은 경우
+//      - @RequestMapping( headers = “key=value”)
+//    특정한 요청 매개변수 키를 가지고 있는 요청을 처리하고 싶은 경우
+//      - @RequestMapping( params = “a”)
+//    특정한 요청 매개변수가 없는 요청을 처리하고 싶은 경우
+//      - @RequestMapping( params = “ ! a”)
+//    특정한 요청 매개변수 키/값을 가지고 있는 요청을 처리하고 싶은 경우
+//      - @RequestMapping( params = “a=b”)
+    @RequestMapping(
+            value = "/hi",
+            headers = "!" + HttpHeaders.FROM,
+            params = "name=lee"
+    )
+    @ResponseBody
+    public String hi() {
+        return "hi";
     }
 }
