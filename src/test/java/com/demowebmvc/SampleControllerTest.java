@@ -37,12 +37,21 @@ public class SampleControllerTest {
     @Test
     public void hiTest() throws Exception {
         mockMvc.perform(get("/hi")
-                        .header(HttpHeaders.AUTHORIZATION, "localhost")
-                        .param("name", "lee")
-                        )
+                .header(HttpHeaders.AUTHORIZATION, "localhost")
+                .param("name", "lee")
+        )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string("hello"));
+    }
+
+    @Test
+    public void byeTest() throws Exception {
+        mockMvc.perform(get("/bye")
+                        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                ;
     }
 
 }

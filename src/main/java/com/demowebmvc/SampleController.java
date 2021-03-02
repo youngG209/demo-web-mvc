@@ -44,4 +44,12 @@ public class SampleController {
     public String hi() {
         return "hi";
     }
+
+
+
+    @GetByeMapping
+    @ResponseBody
+    public String bye() {
+        return "bye";
+    }
 }
