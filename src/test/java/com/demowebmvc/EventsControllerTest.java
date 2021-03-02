@@ -11,8 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest
@@ -39,6 +38,15 @@ public class EventsControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name").value("lee"))
+        ;
+    }
+
+    @Test
+    public void eventForm() throws Exception {
+        mockMvc.perform(get("/event/form"))
+                .andDo(print())
+                .andExpect(view().name("event/form"))
+                .andExpect(model().attributeExists("event"))
         ;
     }
 
