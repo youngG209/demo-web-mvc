@@ -7,18 +7,20 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 public class EventsController {
 
-    @GetMapping("event/form")
+    @GetMapping("/event/form")
     public String eventForm(Model model) {
         Event newEvent = new Event();
         newEvent.setLimit(20);
         newEvent.setName("lee");
         model.addAttribute("event", newEvent);
-        return "event/form";
+        return "/event/form";
     }
 
 //    @PathVariable
@@ -82,7 +84,8 @@ public class EventsController {
 //          -   @Validated는 스프링이 제공하는 애노테이션으로 그룹 클래스를 설정할 수 있다.
     @PostMapping("/event3")
     @ResponseBody
-    public Event getEventModelAttribute(@Validated(Event.ValidateLimit.class) @ModelAttribute Event event, BindingResult bindingResult){
+    public Event getEventModelAttribute(@Validated(Event.ValidateLimit.class) @ModelAttribute Event event,
+                                        BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
             System.out.println("-----------------------------------------------------");
             bindingResult.getAllErrors().forEach(objectError -> {
@@ -91,4 +94,44 @@ public class EventsController {
         }
         return event;
     }
+
+//    Post / Redirect / Get (PRG) 패턴
+//        ● https://en.wikipedia.org/wiki/Post/Redirect/Get
+//        ● Post 이후에 브라우저를 리프래시 하더라도 폼 서브밋이 발생하지 않도록 하는 패턴
+    @PostMapping("/event4")
+    public String CreateEvent(@Validated @ModelAttribute Event event,
+                           BindingResult bindingResult,
+                           Model model){
+        if (bindingResult.hasErrors()) {
+            System.out.println("-----------------------------------------------------");
+            bindingResult.getAllErrors().forEach(objectError -> {
+                System.out.println(objectError.toString());
+            });
+            return "/event/form";
+        }
+
+        // DB 저장 코드
+        List<Event> eventList = new ArrayList<>();
+        eventList.add(event);
+
+        model.addAttribute("eventList", eventList);
+//        get으로 이동 하여 리스트 뽑아 보여줌
+//        return "redirect:/event/list";
+        return "/event/list";
+    }
+
+//    @GetMapping("/event/list")
+//    public String getEvent(Model model){
+//        DB로 부터 list 가지고옴
+//        Event event = new Event();
+//        event.setLimit(20);
+//        event.setName("lee");
+//         
+//        List<Event> eventList = new ArrayList<>();
+//        eventList.add(event);
+//
+//        model.addAttribute("eventList", eventList);
+//
+//        return "/event/list";
+//    }
 }

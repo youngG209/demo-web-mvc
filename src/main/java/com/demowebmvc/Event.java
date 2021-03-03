@@ -1,20 +1,26 @@
 package com.demowebmvc;
 
+import org.springframework.validation.annotation.Validated;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 public class Event {
-
+//    @Validated 그룹 설정
     interface ValidateLimit {}
     interface ValidateName {}
 
     private Integer id;
 
-    @NotBlank(groups = ValidateName.class)
+//    @Validated 그룹 설정
+//    @NotBlank(groups = ValidateName.class)
+    @NotBlank
     private String name;
 
 //    @Min(최소값) : 최소값 설정
-    @Min(value = 0, groups = ValidateLimit.class)
+//    @Validated 그룹 설정
+//    @Min(value = 0, groups = ValidateLimit.class)
+    @Min(value = 0)
     private Integer limit;
 
     public Integer getId() {

@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -60,6 +64,21 @@ public class EventsControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name").value("lee"))
         ;
+    }
+
+    @Test
+    public void getEvent4() throws Exception {
+        ResultActions resultActions = mockMvc.perform(post("/event4")
+                .param("name", "lee")
+                .param("limit", "-10")
+        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().hasErrors());
+        ModelAndView modelAndView = resultActions.andReturn().getModelAndView();
+        Map<String, Object> model = modelAndView.getModel();
+
+        System.out.println(model.size());
     }
 
 }
