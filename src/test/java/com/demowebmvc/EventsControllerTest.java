@@ -50,4 +50,16 @@ public class EventsControllerTest {
         ;
     }
 
+    @Test
+    public void getEvent3() throws Exception {
+        mockMvc.perform(post("/event3")
+                .param("name", "lee")
+                .param("limit", "-10")
+        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("name").value("lee"))
+        ;
+    }
+
 }
