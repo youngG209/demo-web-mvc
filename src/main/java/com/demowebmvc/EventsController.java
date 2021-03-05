@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.events.EventException;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -14,6 +15,28 @@ import java.util.Optional;
 
 @Controller
 public class EventsController {
+//    @ExceptionHandler :
+//        특정 예외가 발생한 요청을 처리하는 핸들러 정의
+//            ● 지원하는 메소드 아규먼트 (해당 예외 객체, 핸들러 객체, ...)
+//            ● 지원하는 리턴 값
+//            ● REST API의 경우 응답 본문에 에러에 대한 정보를 담아주고, 상태 코드를 설정하려면 ResponseEntity를 주로 사용한다.
+//    @ExceptionHandler
+//    public String eventErrorHandler(EventException eventException, Model model) {
+//        model.addAttribute("message", "event error");
+//        return "error";
+//    }
+//
+//    @ExceptionHandler
+//    public String runtimeErrorHandler(RuntimeException runtimeException, Model model) {
+//        model.addAttribute("message", "event error");
+//        return "error";
+//    }
+
+    @ExceptionHandler({EventException.class, RuntimeException.class})
+    public String runtimeEventErrorHandler(RuntimeException runtimeException, Model model) {
+        model.addAttribute("message", "event error");
+        return "error";
+    }
 
 //    @InitBinder :
 //        특정 컨트롤러에서 바인딩 또는 검증 설정을 변경하고 싶을 때 사용
