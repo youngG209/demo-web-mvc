@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,6 +14,21 @@ import java.util.Optional;
 
 @Controller
 public class EventsController {
+
+//    @InitBinder :
+//        특정 컨트롤러에서 바인딩 또는 검증 설정을 변경하고 싶을 때 사용
+//    바인딩 설정
+//        ● webDataBinder.setDisallowedFields();
+//    포매터 설정
+//        ● webDataBinder.addCustomFormatter();
+//    Validator 설정
+//        ● webDataBinder.addValidators();
+//    특정 모델 객체에만 바인딩 또는 Validator 설정을 적용하고 싶은 경우
+//        ● @InitBinder(“event”)
+    @InitBinder
+    public void initEventBinder(WebDataBinder webDataBinder) {
+        webDataBinder.setDisallowedFields("id");
+    }
 
 //    @ModelAttribute의 다른 용법
 //        ● @RequestMapping을 사용한 핸들러 메소드의 아규먼트에 사용하기 (이미 살펴봤습니다.)
